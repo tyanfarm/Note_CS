@@ -1,4 +1,4 @@
-<div style="text-align: center; background-color: #b1d1ff; font-family: 'Trebuchet MS', Arial, sans-serif; color: white; padding: 5px; font-size: 30px; font-weight: bold; border-radius: 0 0 0 0; box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2);margin-bottom: 20px;">
+<div style="text-align: center; background-color: salmon; font-family: 'Trebuchet MS', Arial, sans-serif; color:  #0D0907; padding: 5px; font-size: 40px; padding:20px; font-weight: bold; border-radius: 0 0 0 0; box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2);margin-bottom: 20px;">
 Basic Syntax
 </div>
 
@@ -97,3 +97,97 @@ Basic Syntax
 
         // ~ delegate string temp(string a, int b);
         Func<string, int, string> temp;
+
+# Event Handler
+- `publisher`: class phát đi sự kiện
+
+- `subcriber`: class nhận sự kiện
+
+- Cú pháp:
+    + ```
+        // ~ delegate void temp(object? sender, EventArgs args)
+        public event EventHandler? eventCatcher;
+    + `sender`: class nào gửi sự kiện đi
+    + `EventArgs`: mang dữ liệu mà sự kiện gửi đi
+
+- Để thực hiện với `EventArgs` thì ta cần tạo ra 1 class kế thừa:
+    ```
+    class DataInput : EventArgs {
+        public int data {get; set;}
+
+        public DataInput(int x) {
+            data = x;
+        }
+    }
+- `publisher`:
+    ```
+    eventCatcher?.Invoke(this, new DataInput(i));
+- `subcriber`:
+    ```
+    class SquareNum {
+        public void Subcriber(UserInput input) {
+            input.eventCatcher += Calculate;
+        }
+
+        public void Calculate(object? sender, EventArgs e) {
+            DataInput dataInput = (DataInput)e;
+            int i = dataInput.data;
+
+            Console.WriteLine($"Square Num of {i} is: {i * i}");
+        }
+    }
+
+- Code mẫu:
+    ```
+    namespace CS_Event {
+    class DataInput : EventArgs {
+        public int data {get; set;}
+
+        public DataInput(int x) {
+            data = x;
+        }
+    }
+
+    class UserInput {
+        // ~ delegate void temp(object? sender, EventArgs args)
+        public event EventHandler? eventCatcher;
+
+        // publisher
+        public void Input() {
+            do {
+                Console.Write("Enter number: ");
+                string? s = Console.ReadLine();
+                int i = Int32.Parse(s ?? string.Empty);
+
+                eventCatcher?.Invoke(this, new DataInput(i));
+
+            } while (true);
+        }
+    }
+
+    class SquareNum {
+        public void Subcriber(UserInput input) {
+            input.eventCatcher += Calculate;
+        }
+
+        public void Calculate(object? sender, EventArgs e) {
+            DataInput dataInput = (DataInput)e;
+            int i = dataInput.data;
+
+            Console.WriteLine($"Square Num of {i} is: {i * i}");
+        }
+    }
+
+    class Program {
+        static void Main(string[] args) {
+            // publisher
+            UserInput input = new UserInput();
+
+            // subcriber
+            SquareNum square = new SquareNum();
+            square.Subcriber(input);
+
+            input.Input();
+        }
+    }
+}

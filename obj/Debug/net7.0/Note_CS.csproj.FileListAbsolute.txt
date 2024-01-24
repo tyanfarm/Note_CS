@@ -1,0 +1,14 @@
+D:\Tyan\ASPNET\Note_CS\bin\Debug\net7.0\Note_CS.exe
+D:\Tyan\ASPNET\Note_CS\bin\Debug\net7.0\Note_CS.deps.json
+D:\Tyan\ASPNET\Note_CS\bin\Debug\net7.0\Note_CS.runtimeconfig.json
+D:\Tyan\ASPNET\Note_CS\bin\Debug\net7.0\Note_CS.dll
+D:\Tyan\ASPNET\Note_CS\bin\Debug\net7.0\Note_CS.pdb
+D:\Tyan\ASPNET\Note_CS\obj\Debug\net7.0\Note_CS.GeneratedMSBuildEditorConfig.editorconfig
+D:\Tyan\ASPNET\Note_CS\obj\Debug\net7.0\Note_CS.AssemblyInfoInputs.cache
+D:\Tyan\ASPNET\Note_CS\obj\Debug\net7.0\Note_CS.AssemblyInfo.cs
+D:\Tyan\ASPNET\Note_CS\obj\Debug\net7.0\Note_CS.csproj.CoreCompileInputs.cache
+D:\Tyan\ASPNET\Note_CS\obj\Debug\net7.0\Note_CS.dll
+D:\Tyan\ASPNET\Note_CS\obj\Debug\net7.0\refint\Note_CS.dll
+D:\Tyan\ASPNET\Note_CS\obj\Debug\net7.0\Note_CS.pdb
+D:\Tyan\ASPNET\Note_CS\obj\Debug\net7.0\Note_CS.genruntimeconfig.cache
+D:\Tyan\ASPNET\Note_CS\obj\Debug\net7.0\ref\Note_CS.dll
