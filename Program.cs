@@ -1,90 +1,43 @@
-﻿namespace CS_Delegate 
-{
-    public delegate void showLog(string message);
+﻿using CS_Delegate;
+using CS_Event;
+using CS_ExtendMethod;
 
-    class Program 
-    {
-        static void Info(string s) {
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine(s);
-            Console.ResetColor();
-        }
-
-        static void Warning(string s) {
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine(s);
-            Console.ResetColor();
-        }
-
-        // static void Main(string[] args) {
-        //     // showLog? log = null;
-
-        //     // log += Info;
-        //     // log += Info;
-        //     // log += Info;
-
-        //     // log += Warning;
-        //     // log += Warning;
-
-        //     Action<string> log;
-        //     log = Info;
-        //     // log("Hello World");
-        //     log?.Invoke("Con Cac");
-        // }
-    }
-
-}
-
-namespace CS_Event {
-    class DataInput : EventArgs {
-        public int data {get; set;}
-
-        public DataInput(int x) {
-            data = x;
-        }
-    }
-
-    class UserInput {
-        // ~ delegate void temp(object? sender, EventArgs args)
-        public event EventHandler? eventCatcher;
-
-        // publisher
-        public void Input() {
-            do {
-                Console.Write("Enter number: ");
-                string? s = Console.ReadLine();
-                int i = Int32.Parse(s ?? string.Empty);
-
-                eventCatcher?.Invoke(this, new DataInput(i));
-
-            } while (true);
-        }
-    }
-
-    class SquareNum {
-        public void Subcriber(UserInput input) {
-            input.eventCatcher += Calculate;
-        }
-
-        public void Calculate(object? sender, EventArgs e) {
-            DataInput dataInput = (DataInput)e;
-            int i = dataInput.data;
-
-            Console.WriteLine($"Square Num of {i} is: {i * i}");
-        }
-    }
-
+namespace Note_CS {
     class Program {
         static void Main(string[] args) {
-            // publisher
-            UserInput input = new UserInput();
+            // // CS_Delegate
 
-            // subcriber
-            SquareNum square = new SquareNum();
-            square.Subcriber(input);
+            // Action<string>? log = null;
+            // log += DelegateFunc.Info;
+            // log += DelegateFunc.Warning;
+            // log += DelegateFunc.Info;
 
-            input.Input();
+            // log?.Invoke("Con Cac");
+
+            //========================================
+
+            // // CS_Event
+
+            // // publisher
+            // UserInput input = new UserInput();
+
+            // // subcriber
+            // SquareNum square = new SquareNum();
+            // square.Subcriber(input);
+
+            // input.Input();
+
+            //========================================
+
+            // CS_ExtendMethod
+
+            string s = "Con cac";
+            // ExtendMethod.Print(s, ConsoleColor.DarkBlue);
+            s.Print(ConsoleColor.DarkGreen);
+
+            int x = 5;
+            Console.WriteLine($"Cube number of {x} is {x.Cube()}");
+            Console.WriteLine($"Square number of {x} is {x.Square()}");
         }
     }
 }
-

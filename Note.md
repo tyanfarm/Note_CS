@@ -191,3 +191,56 @@ Basic Syntax
         }
     }
 }
+
+# Extension Method (Phương pháp mở rộng)
+- Lưu ý: `method` phải là `static` và nằm trong `static class`
+- Sử dụng method bình thường: 
+    + ```
+        static class ExtendMethod {
+            public static void Print(string s, ConsoleColor color) {
+                Console.ForegroundColor = color;
+                Console.WriteLine(s);
+                Console.ResetColor();
+            }
+        }
+
+    + ```
+        static void Main(string[] args) {
+            string s = "Con cac";
+            ExtendMethod.Print(s, ConsoleColor.DarkBlue);
+        }
+
+- Khi dùng `extend method` ta sẽ sử dụng `this`
+    + ```
+        static class ExtendMethod {
+            public static void Print(this string s, ConsoleColor color) {
+                Console.ForegroundColor = color;
+                Console.WriteLine(s);
+                Console.ResetColor();
+            }
+        }
+    + ```
+        static void Main(string[] args) {
+            string s = "Con cac";
+            s.Print(ConsoleColor.DarkGreen);
+        }
+    + Có thể thấy ở trên là khi đặt `this` ở trước `string s` trong hàm `Print()` thì ta có thể gọi hàm thẳng qua biến `string`
+
+- Ví dụ thêm:
+    + ```
+        static class ExtendMethod {
+            public static double Square(this int x) {
+                return x * x;
+            }
+
+            public static double Cube(this int x) {
+                return x * x * x;
+            }
+        }
+    + ```
+        static void Main(string[] args) {
+            int x = 5;
+
+            Console.WriteLine($"Cube number of {x} is {x.Cube()}");
+            Console.WriteLine($"Square number of {x} is {x.Square()}");
+        }
