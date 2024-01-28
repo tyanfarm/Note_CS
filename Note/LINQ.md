@@ -5,3 +5,34 @@
 
 <br/>
 
+# Basic Query 
+- ```
+    var query = from p in products 
+                        where p.Price == 400
+                        select p;
+
+            foreach (var product in query) {
+                Console.WriteLine(product);
+            }
+<br/>
+
+# API LINQ
+
+## Select
+- ```
+    var result = products.Select(
+                            // Delegate
+                            (p) => {
+                                return new {
+                                    Name = p.Name,
+                                    Price = p.Price
+                                };
+                            }
+                        );
+
+            foreach (var product in result) {
+                Console.WriteLine(product);
+            }
+<br/>
+
+## 
