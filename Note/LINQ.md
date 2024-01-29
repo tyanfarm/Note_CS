@@ -110,4 +110,32 @@
     { ID_Brand = 3, Name = TV, Brand_Name = C Company, ID = 3 }
 <br/>
 
+## GroupJoin
+- Khác `Join` ở chỗ `Join` tạo bảng dựa trên 2 cột có giá trị bằng nhau. `GroupJoin` tạo bảng và nhóm riêng (tương tự với `GroupBy` trong `SQL`)
 
+- ```
+    var result = brands.GroupJoin(products, b => b.ID, p => p.Brand, (b, p) => {
+        return new {
+            Brand = b.Name,
+            Products = p
+        };
+    });
+
+    foreach (var product in result) {
+        Console.WriteLine(product.Brand);
+        foreach (var item in product.Products) {
+            Console.WriteLine(item);
+        }
+    }
+- Console:
+    ```
+    A Company
+        2   Table        300   1   Orange, Purple
+        6   Fridge       2000  1   Red
+    B Company
+        3   Fan          700   2   Yellow
+        5   Microwave    800   2   Yellow, Green
+    C Company
+        1   Laptop       200   3   Yellow, Green
+        4   Door         400   3   Blue
+        7   TV           1000  3   Yellow, Grey

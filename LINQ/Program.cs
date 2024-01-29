@@ -20,17 +20,25 @@ namespace LINQ {
                 new Product(7, "TV", 1000, new string[] {"Yellow", "Grey"}, 3),
             };
 
-            var result = products.Join(brands, p => p.Brand, b => b.ID, (p, b) => {
+            var result = brands.GroupJoin(products, b => b.ID, p => p.Brand, (b, p) => {
                 return new {
-                    ID_Brand = p.Brand,
-                    Name = p.Name,
-                    Brand_Name = b.Name,
-                    ID = b.ID
+                    Brand = b.Name,
+                    Products = p
                 };
             });
 
+            // var result = products.Join(brands, p => p.Brand, b => b.ID, (p, b) => {
+            //     return new {
+            //         Brand_Name = b.Name,
+            //         Products = p
+            //     };
+            // });
+
             foreach (var product in result) {
-                Console.WriteLine(product);
+                Console.WriteLine(product.Brand);
+                foreach (var item in product.Products) {
+                    Console.WriteLine(item);
+                }
             }
 
 
