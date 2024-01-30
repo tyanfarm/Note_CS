@@ -139,3 +139,108 @@
         1   Laptop       200   3   Yellow, Green
         4   Door         400   3   Blue
         7   TV           1000  3   Yellow, Grey
+<br/>
+
+## GroupJoin & Join
+- When you Join the two lists on the `Id` field the result will be:
+    ```
+    Value ChildValue
+    A     a1
+    A     a2
+    A     a3
+    B     b1
+    B     b2
+- When you GroupJoin the two lists on the `Id` field the result will be:
+    ```
+    Value  ChildValues
+    A      [a1, a2, a3]
+    B      [b1, b2]
+    C      []
+
+## GroupBy
+- `GroupBy` theo `Price`
+
+- ```
+    var result = products.GroupBy(p => p.Price);
+
+    foreach (var group in result) {
+        Console.WriteLine(group.Key);
+
+        foreach (var item in group) {
+            Console.WriteLine(item);
+        }
+    }
+- Console:
+    ```
+    200
+    1   Laptop       200   3   Yellow, Green
+    300
+    2   Table        300   1   Orange, Purple
+    700
+    3   Fan          700   2   Yellow
+    400
+    4   Door         400   3   Blue
+    800
+    5   Microwave    800   2   Yellow, Green
+    2000
+    6   Fridge       2000  1   Red
+    1000
+    7   TV           1000  3   Yellow, Grey
+<br/>
+
+## Take
+- Bắt đầu từ phần tử đầu tiên
+- ```
+    products.Take(4).ToList().ForEach(p => Console.WriteLine(p));
+- Console:
+    ```
+    ID  Name        Price  Brand     Colors
+    1   Laptop       200    3        Yellow, Green
+    2   Table        300    1        Orange, Purple
+    3   Fan          700    2        Yellow
+    4   Door         400    3        Blue
+<br/>
+
+## Skip
+- Bắt đầu từ phần tử đầu tiên
+- ```
+    products.Skip(3).ToList().ForEach(p => Console.WriteLine(p));
+- Console:
+    ```
+    4   Door         400   3   Blue
+    5   Microwave    800   2   Yellow, Green
+    6   Fridge       2000  1   Red
+    7   TV           1000  3   Yellow, Grey
+<br/>
+
+## OrderBy 
+- Tăng dần
+- ```
+    products.OrderBy(p => p.Price).ToList().ForEach(p => Console.WriteLine(p));
+- Console:
+    ```
+    1   Laptop       200   3   Yellow, Green
+    2   Table        300   1   Orange, Purple
+    4   Door         400   3   Blue
+    3   Fan          700   2   Yellow
+    5   Microwave    800   2   Yellow, Green
+    7   TV           1000  3   Yellow, Grey
+    6   Fridge       2000  1   Red
+<br/>
+
+## OrderByDescending
+- Giảm dần
+- ```
+    products.OrderByDescending(p => p.Brand).ToList().ForEach(p => Console.WriteLine(p));
+- Console:
+    ```
+    1   Laptop       200   3   Yellow, Green
+    4   Door         400   3   Blue
+    7   TV           1000  3   Yellow, Grey
+    3   Fan          700   2   Yellow
+    5   Microwave    800   2   Yellow, Green
+    2   Table        300   1   Orange, Purple
+    6   Fridge       2000  1   Red
+<br/>
+
+
