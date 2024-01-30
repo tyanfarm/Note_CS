@@ -20,15 +20,17 @@ namespace LINQ {
                 new Product(7, "TV", 1000, new string[] {"Yellow", "Grey"}, 3),
             };
 
-            var result = products.GroupBy(p => p.Price);
+            var result = products.Count(p => p.Price >= 500);
+            Console.WriteLine(result);
 
-            foreach (var group in result) {
-                Console.WriteLine(group.Key);
+            // foreach (var group in result) {
+            //     Console.WriteLine(group.Key);
 
-                foreach (var item in group) {
-                    Console.WriteLine(item);
-                }
-            }
+            //     foreach (var item in group) {
+            //         Console.WriteLine(item);
+            //     }
+            // }
+
 
 
         }

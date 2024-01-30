@@ -78,6 +78,12 @@
                 );
 <br/>
 
+## Distinct
+- Lọc lấy cái giá trị `unique` từ `SelectMany`
+- ```
+    products.SelectMany(p => p.Colors).Distinct().ToList().ForEach(color => Console.WriteLine(color));
+<br/>
+
 ## Min, Max, Sum, Average
 - ```
     int[] numbers = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
@@ -242,5 +248,43 @@
     2   Table        300   1   Orange, Purple
     6   Fridge       2000  1   Red
 <br/>
+
+## SingleOrDefault
+- Nếu giá trị nhiều hơn 1 thì trả về null
+
+- ```
+    var result = products.SingleOrDefault(p => p.Price == 200);
+    if (result != null) {
+        Console.WriteLine(result);
+    }
+<br/>
+
+## Any
+- Kiểm tra có tồn tại 1 giá trị nào đó thỏa điều kiện (trả về `True`/ `False`)
+
+- ```
+    var result = products.Any(p => p.Price == 500);
+    
+    Console.WriteLine(result);
+<br/>
+
+## All
+- Kiểm tra tất cả giá trị thỏa điều kiện không (trả về `True`/ `False`)
+
+- ```
+    var result = products.All(p => p.Price >= 600);
+    
+    Console.WriteLine(result);
+<br/>
+
+## Count
+- Đếm các giá trị thỏa 1 điều kiện nào đó
+
+- ```
+    var result = products.Count(p => p.Price >= 600);
+    
+    Console.WriteLine(result);
+<br/>
+
 
 
