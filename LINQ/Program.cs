@@ -20,19 +20,16 @@ namespace LINQ {
                 new Product(7, "TV", 1000, new string[] {"Yellow", "Grey"}, 3),
             };
 
-            products.Where(p => p.Price >= 500 && p.Price <= 2000)
-                    .OrderByDescending(p => p.Price)
-                    .Join(brands, p => p.Brand, b => b.ID, (p, b) => {
-                        return new {
-                            Name_Product = p.Name,
-                            Name_Brand = b.Name,
-                            Price = p.Price
-                        };
-                    })
-                    .ToList()
-                    .ForEach(item => {
-                        Console.WriteLine($"{item.Name_Product, -10} {item.Name_Brand, -10} {item.Price, -5}");
-                    });
+            var result = from p in products
+                        group p by p.Price into gr
+                        orderby gr.Key
+                        select gr;
+
+            result.ToList().ForEach(group => {
+                Console.WriteLine(group.Key);
+
+                group.ToList().ForEach(p => Console.WriteLine(p));
+            });
             
 
             // foreach (var group in result) {

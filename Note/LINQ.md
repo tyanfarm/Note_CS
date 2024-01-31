@@ -16,6 +16,36 @@
             }
 <br/>
 
+## GroupBy use Query
+- ```
+    var result = from p in products
+                group p by p.Price into gr
+                orderby gr.Key
+                select gr;
+
+    result.ToList().ForEach(group => {
+        Console.WriteLine(group.Key);
+
+        group.ToList().ForEach(p => Console.WriteLine(p));
+    });
+- Console:
+    ```
+    200
+    1   Laptop       200   3   Yellow, Green
+    300
+    2   Table        300   1   Orange, Purple
+    400
+    4   Door         400   3   Blue
+    700
+    3   Fan          700   2   Yellow
+    800
+    5   Microwave    800   2   Yellow, Green
+    1000
+    7   TV           1000  3   Yellow, Grey
+    2000
+    6   Fridge       2000  1   Red
+<br/>
+
 # API LINQ
 ## Data
 - ```
@@ -308,6 +338,5 @@
     Microwave  B Company  800
     Fan        B Company  700
 <br/>
-
 
 
