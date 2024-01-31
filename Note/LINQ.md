@@ -286,5 +286,28 @@
     Console.WriteLine(result);
 <br/>
 
+## Example using LINQ
+- ```
+    products.Where(p => p.Price >= 500 && p.Price <= 2000)
+                    .OrderByDescending(p => p.Price)
+                    .Join(brands, p => p.Brand, b => b.ID, (p, b) => {
+                        return new {
+                            Name_Product = p.Name,
+                            Name_Brand = b.Name,
+                            Price = p.Price
+                        };
+                    })
+                    .ToList()
+                    .ForEach(item => {
+                        Console.WriteLine($"{item.Name_Product, -10} {item.Name_Brand, -10} {item.Price, -5}");
+                    });
+- Console:
+    ```
+    Fridge     A Company  2000 
+    TV         C Company  1000 
+    Microwave  B Company  800
+    Fan        B Company  700
+<br/>
+
 
 

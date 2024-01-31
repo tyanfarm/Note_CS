@@ -20,8 +20,20 @@ namespace LINQ {
                 new Product(7, "TV", 1000, new string[] {"Yellow", "Grey"}, 3),
             };
 
-            var result = products.Count(p => p.Price >= 500);
-            Console.WriteLine(result);
+            products.Where(p => p.Price >= 500 && p.Price <= 2000)
+                    .OrderByDescending(p => p.Price)
+                    .Join(brands, p => p.Brand, b => b.ID, (p, b) => {
+                        return new {
+                            Name_Product = p.Name,
+                            Name_Brand = b.Name,
+                            Price = p.Price
+                        };
+                    })
+                    .ToList()
+                    .ForEach(item => {
+                        Console.WriteLine($"{item.Name_Product, -10} {item.Name_Brand, -10} {item.Price, -5}");
+                    });
+            
 
             // foreach (var group in result) {
             //     Console.WriteLine(group.Key);
