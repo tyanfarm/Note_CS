@@ -502,5 +502,7 @@ Basic Syntax
             return t5.Result;
         }
 - Với `Task5()` có giá trị trả về là `string`, ta có thể in chuỗi kết quả này bằng cú pháp `t5.Result()`
+<br/>
 
-    
+# Attribute
+- Có chức năng dán nhãn và thông báo
