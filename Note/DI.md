@@ -48,3 +48,97 @@ Dependency Injection
 
 # ServiceCollection
 - Thư viện hỗ trợ DI của `C#`
+- Để sử dụng ta thực hiện các bước:
+    + Cài đặt package:
+        + `dotnet add package Microsoft.Extensions.DependencyInjection`
+
+    + Khai báo
+        + ```
+            using Microsoft.Extensions.DependencyInjection;
+
+            var services = new ServiceCollection();
+
+            services.AddSingleton<Interface.IClassC, Interface.ClassC>();
+
+            var providers = services.BuildServiceProvider();
+
+
+### Singleton
+- Giúp các đối tượng chỉ cần khởi tạo 1 lần
+- `Không singleton`:
+    + ```
+        for (int i = 0; i < 5; i++) {
+            Interface.IClassC c = new Interface.ClassC();
+            
+            Console.WriteLine(c?.GetHashCode());    
+        }
+    + Output Console:
+        ```
+        Class C created !
+        43942917
+        Class C created !
+        59941933
+        Class C created !
+        2606490
+        Class C created !
+        23458411
+        Class C created !
+        9799115
+    + Có thể thấy mỗi lần khởi tạo đều trả về 1 `Hash Code` khác nhau
+
+- `Sử dụng Singleton`:
+    + ```
+        for (int i = 0; i < 5; i++) {
+            Interface.IClassC? c = providers.GetService<Interface.IClassC>();
+
+            Console.WriteLine(c?.GetHashCode());    
+        }
+    + Output Console:
+        ```
+        Class C created !
+        43942917
+        43942917
+        43942917
+        43942917
+        43942917
+    + `ClassC` chỉ khởi tạo đúng 1 lần
+
+### Transient (Tạm thời)
+- Mỗi lần sẽ khởi tạo 1 giá trị khác nhau
+
+### Scoped
+- Khởi tạo giá trị giống `Singleton` nhưng trong 1 phạm vi tự tạo riêng.
+
+- ```
+    for (int i = 0; i < 5; i++) {
+        Interface.IClassC? c = providers.GetService<Interface.IClassC>();
+        // Interface.IClassC c = new Interface.ClassC();
+
+        Console.WriteLine(c?.GetHashCode()); 
+    }
+
+    using (var scope = providers.CreateScope()) {
+        var provider1 = scope.ServiceProvider;
+
+        for (int i = 0; i < 5; i++) {
+            Interface.IClassC? c = provider1.GetService<Interface.IClassC>();
+            // Interface.IClassC c = new Interface.ClassC();
+
+            Console.WriteLine(c?.GetHashCode()); 
+        }
+    }
+- Output console:
+    ```
+    Class C created !
+    43942917
+    43942917
+    43942917
+    43942917
+    43942917
+    Class C created !
+    59941933
+    59941933
+    59941933
+    59941933
+    59941933
+- Có thể thấy ở trên đoạn code ngoài `scope` và trong `scope` tạo ra 2 `Class C` khác nhau

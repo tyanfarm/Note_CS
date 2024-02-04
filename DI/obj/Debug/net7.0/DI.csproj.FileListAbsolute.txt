@@ -12,3 +12,7 @@ D:\Tyan\ASPNET\Note_CS\DI\obj\Debug\net7.0\refint\DI.dll
 D:\Tyan\ASPNET\Note_CS\DI\obj\Debug\net7.0\DI.pdb
 D:\Tyan\ASPNET\Note_CS\DI\obj\Debug\net7.0\DI.genruntimeconfig.cache
 D:\Tyan\ASPNET\Note_CS\DI\obj\Debug\net7.0\ref\DI.dll
+D:\Tyan\ASPNET\Note_CS\DI\bin\Debug\net7.0\Microsoft.Extensions.DependencyInjection.dll
+D:\Tyan\ASPNET\Note_CS\DI\bin\Debug\net7.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+D:\Tyan\ASPNET\Note_CS\DI\obj\Debug\net7.0\DI.csproj.AssemblyReference.cache
+D:\Tyan\ASPNET\Note_CS\DI\obj\Debug\net7.0\DI.csproj.CopyComplete
