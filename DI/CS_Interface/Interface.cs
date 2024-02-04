@@ -1,5 +1,25 @@
 namespace CS_Interface {
     class Interface {
+        public interface IClassB {
+            public void ActionB();
+        }
+
+        public class ClassB : IClassB {
+            IClassC _c;
+            string _msg;
+
+            public ClassB(IClassC c, string msg) {
+                _c = c;
+                _msg = msg;
+                Console.WriteLine("ClassB2 is created !");
+            }
+
+            public void ActionB() {
+                Console.WriteLine(_msg);
+                _c.ActionC();
+            }
+        }
+
         public interface IClassC {
             public void ActionC();
         }
