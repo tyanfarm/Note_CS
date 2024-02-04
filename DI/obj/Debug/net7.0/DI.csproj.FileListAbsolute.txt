@@ -1,0 +1,14 @@
+D:\Tyan\ASPNET\Note_CS\DI\bin\Debug\net7.0\DI.exe
+D:\Tyan\ASPNET\Note_CS\DI\bin\Debug\net7.0\DI.deps.json
+D:\Tyan\ASPNET\Note_CS\DI\bin\Debug\net7.0\DI.runtimeconfig.json
+D:\Tyan\ASPNET\Note_CS\DI\bin\Debug\net7.0\DI.dll
+D:\Tyan\ASPNET\Note_CS\DI\bin\Debug\net7.0\DI.pdb
+D:\Tyan\ASPNET\Note_CS\DI\obj\Debug\net7.0\DI.GeneratedMSBuildEditorConfig.editorconfig
+D:\Tyan\ASPNET\Note_CS\DI\obj\Debug\net7.0\DI.AssemblyInfoInputs.cache
+D:\Tyan\ASPNET\Note_CS\DI\obj\Debug\net7.0\DI.AssemblyInfo.cs
+D:\Tyan\ASPNET\Note_CS\DI\obj\Debug\net7.0\DI.csproj.CoreCompileInputs.cache
+D:\Tyan\ASPNET\Note_CS\DI\obj\Debug\net7.0\DI.dll
+D:\Tyan\ASPNET\Note_CS\DI\obj\Debug\net7.0\refint\DI.dll
+D:\Tyan\ASPNET\Note_CS\DI\obj\Debug\net7.0\DI.pdb
+D:\Tyan\ASPNET\Note_CS\DI\obj\Debug\net7.0\DI.genruntimeconfig.cache
+D:\Tyan\ASPNET\Note_CS\DI\obj\Debug\net7.0\ref\DI.dll
