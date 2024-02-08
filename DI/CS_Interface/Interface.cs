@@ -1,3 +1,5 @@
+using Microsoft.Extensions.DependencyInjection;
+
 namespace CS_Interface {
     class Interface {
         public interface IClassB {
@@ -42,6 +44,15 @@ namespace CS_Interface {
             public void ActionC() {
                 Console.WriteLine("Action in class C1");
             }
+        }
+
+        public static IClassB CreateB(IServiceProvider providers) {
+            var b2 = new ClassB(
+                providers.GetService<IClassC>(),
+                "Processing in Class B !"
+            );
+
+            return b2;
         }
     }
 }

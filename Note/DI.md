@@ -142,3 +142,57 @@ Dependency Injection
     59941933
     59941933
 - Có thể thấy ở trên đoạn code ngoài `scope` và trong `scope` tạo ra 2 `Class C` khác nhau
+
+### Delegate & Factory
+- ```
+    public interface IClassB {
+            public void ActionB();
+        }
+
+    public class ClassB : IClassB {
+        IClassC _c;
+        string _msg;
+
+        public ClassB(IClassC c, string msg) {
+            _c = c;
+            _msg = msg;
+            Console.WriteLine("ClassB2 is created !");
+        }
+
+        public void ActionB() {
+            Console.WriteLine(_msg);
+            _c.ActionC();
+        }
+    }
+
+- Ở đoạn code trên, `ClassB` có 1 `attribute` `dependency` `IClassC` nên khi khởi tạo cần thêm 2 tham số kèm theo.
+
+- Nếu khởi tạo `Service` như cú pháp cũ là `services.AddSingleton<Interface.IClassB, Interface.ClassB>` thì lỗi vì khởi tạo `ClassB` yêu cầu 2 tham số. 
+- Do đó ta sử dụng `delegate` như sau:
+    + ```
+        services.AddSingleton<Interface.IClassB, Interface.ClassB>(
+            (providers) => {
+                var b2 = new Interface.ClassB(
+                    providers.GetService<Interface.IClassC>(),
+                    "Processing in Class B !"
+                );
+
+                return b2;
+            }
+        );
+
+- Có thể dùng phương pháp khác là khởi tạo kèm `Factory`
+
+- `Factory` là 1 hàm riêng dùng để khởi tạo `service`
+    + ```
+        public static ClassB CreateB(IServiceProvider providers) {
+            var b2 = new ClassB(
+                providers.GetService<IClassC>(),
+                "Processing in Class B !"
+            );
+
+            return b2;
+        }
+    + ```
+        services.AddSingleton<Interface.IClassB>(Interface.CreateB);
+
