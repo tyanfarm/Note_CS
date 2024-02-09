@@ -255,3 +255,52 @@ Dependency Injection
         ```
         Hello / 2
 - Khi phương thức `MyService` được khởi tạo (`services.AddSingleton<MyService>();`) thì ở `constructor` của nó có 1 `IOptions` có kiểu `MyServiceOptions` nên nó sẽ tìm trong chương trình xem chỗ nào đăng ký `MyServiceOptions` (đăng ký qua `Configure<>`) thì nó sẽ lấy ra và `inject` vào `MyService` cho chúng ta khi `get` dịch vụ (`var myservice = providers.GetService<MyService>();`)
+
+### Nạp cấu hình từ file
+- Add package:
+    + `dotnet add package Microsoft.Extensions.Configuration` 
+    + `dotnet add package Microsoft.Extensions.Options.ConfigurationExtensions`
+    + `dotnet add package Microsoft.Extensions.Configuration.Json`
+
+- Using:
+    ```
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.Configuration.Json;
+- File json:
+    ```
+    {
+        "section1": {
+            "key1": "concac1",
+            "key2": 50
+        },
+
+        "MyServiceOptions" : {
+            "data1": "Fuck ur mum",
+            "data2": 100
+        }
+    }
+- Get value:
+    ```
+    // Biến lưu trữ cấu hình
+    IConfigurationRoot configurationRoot;
+
+    // Biến sử dụng để thiết lập cách ASP.NET Core sẽ đọc và load cấu hình
+    ConfigurationBuilder configBuilder = new ConfigurationBuilder();
+
+    // Thiết lập đường dẫn
+    configBuilder.SetBasePath(Directory.GetCurrentDirectory());
+
+    // Thêm tệp json
+    configBuilder.AddJsonFile("configuration.json");
+
+    configurationRoot = configBuilder.Build();
+
+    // Từng section tương ứng với từng bậc trong file json
+    var data1 = configurationRoot.GetSection("MyServiceOptions").GetSection("data1").Value;
+
+    var data2 = configurationRoot.GetSection("MyServiceOptions").GetSection("data2").Value;
+
+    Console.WriteLine($"{data1} in {data2}");
+- Console:
+    ```
+    Fuck ur mum in 100
