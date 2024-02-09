@@ -5,6 +5,51 @@ Dependency Injection
 # Dependency (phụ thuộc)
 - Là khi 1 class này phụ thuộc và thường dùng để quản lý bởi 1 class khác
 
+# Dependency Inversion
+- Nguyên tắc: một module cấp cao không nên phụ thuộc vào module cấp thấp mà chúng chỉ lên phụ thuộc vào Interface.
+
+- Sai:
+    ```
+    class LoginFaceBook
+    {
+        // Logic code
+        function loginFace {
+
+        }
+    }
+
+    class UserLogin
+    {
+        private $login;
+        function __contruct(LoginFaceBook $logInFace) {
+            $this->login = $loginFace;
+        }
+
+        // Logic code
+    }
+- Đúng:
+    ```
+    interface LoginWithAnOtherAccount
+    {
+        public function login();
+    }   
+
+    class LoginFaceBook implements LoginWithAnOtherAccount
+    {
+        // Code login login facebook
+        public function login();
+    }
+
+    class UserLogin
+    {
+        private $login;
+        function __contruct(LoginWithAnOtherAccount $login) {
+            $this->login = $login;
+        }
+        
+        // Logic tiếp theo ....
+    }
+
 # Inverse of Control (IOC) - Đảo ngược điều khiển
 - Tham chiếu trực tiếp
 ![alt](https://raw.githubusercontent.com/xuanthulabnet/learn-cs-netcore/master/imgs/di-01.png)
@@ -14,6 +59,13 @@ Dependency Injection
 
 # Dependency Injection
 - Có chức năng tiêm các `Dependency` vào và sử dụng
+
+- Các module cấp module phụ thuộc sẽ được `inject` vào module cấp cao.
+    + ![alt](https://blog.haposoft.com/content/images/2021/11/download-1.png)
+
+- Khi khởi tạo 1 `attribute` trong class thì đây gọi là `dependency`
+
+- Khi khởi tạo giá trị cho `attribute` bằng 1 đối tượng có kiểu dữ liệu giống nó từ ngoài vào thì đây gọi là `inject` 
 
 - Các kiểu DI:
     + DI thông qua phương thức khởi tạo
@@ -304,3 +356,8 @@ Dependency Injection
 - Console:
     ```
     Fuck ur mum in 100
+- Như vậy để đăng ký (`Configure<>`) ta sẽ thêm như sau:
+    ```
+    var jsonMyService = configurationRoot.GetSection("MyServiceOptions");
+
+    services.Configure<MyServiceOptions>(jsonMyService);
