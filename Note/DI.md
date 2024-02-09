@@ -48,6 +48,13 @@ Dependency Injection
 
 # ServiceCollection
 - Thư viện hỗ trợ DI của `C#`
+
+- `IServiceCollection`: cho phép bạn đăng ký các dịch vụ (truy cập dữ liệu, logging, authentication, authorization, ...) trong quá trình khởi tạo ứng dụng.
+
+- `IServiceProvider`:  cung cấp các phương thức để truy cập các dịch vụ được đăng ký trong `IServiceCollection` và chuyển chúng cho các thành phần khác trong ứng dụng.
+
+- Cần sử dụng `BuildServiceProvider()` để tạo một `IServiceProvider`.
+
 - Để sử dụng ta thực hiện các bước:
     + Cài đặt package:
         + `dotnet add package Microsoft.Extensions.DependencyInjection`
@@ -144,14 +151,16 @@ Dependency Injection
 - Có thể thấy ở trên đoạn code ngoài `scope` và trong `scope` tạo ra 2 `Class C` khác nhau
 
 ### Delegate & Factory
+- `readonly`: từ khóa để khai báo 1 `attribute` mà chỉ nhận được giá trị qua constructor.
+
 - ```
     public interface IClassB {
             public void ActionB();
         }
 
     public class ClassB : IClassB {
-        IClassC _c;
-        string _msg;
+        readonly IClassC _c;
+        readonly string _msg;
 
         public ClassB(IClassC c, string msg) {
             _c = c;
@@ -196,3 +205,53 @@ Dependency Injection
     + ```
         services.AddSingleton<Interface.IClassB>(Interface.CreateB);
 
+### IOptions
+- Khi một dịch vụ đăng ký trong DI, nếu nó cần các tham số để khởi tạo thì ta có thể Inject các tham số khởi tạo là các đối tượng như cách làm ở trên. Tuy nhiên để tách bạch giữa các dịch vụ và các thiết lập truyền vào để khởi tạo dịch vụ thì trong ServiceCollection hỗ trợ sử dụng giao diện IOptions.
+
+- Add package: `dotnet add package Microsoft.Extensions.Options`
+
+- Code:
+    + ```
+        public class MyServiceOptions {
+            public string? data1 {get; set;}
+            public int data2 {get; set;}
+        }
+    + ```
+        public class MyService {
+            public string? data1 {get; set;}
+            public int data2 {get; set;}
+
+            public MyService(IOptions<MyServiceOptions> options) {
+                MyServiceOptions _options = options.Value;
+
+                data1 = _options.data1;
+                data2 = _options.data2;
+            }
+
+            public void PrintData() => Console.WriteLine($"{data1} / {data2}");
+
+        }
+    + Main:
+    
+    + ```
+        services.Configure<MyServiceOptions>(
+            (MyServiceOptions options) => {
+                options.data1 = "Hello";
+                options.data2 = 2;
+            }
+        );
+
+        // Đăng ký dịch vụ MyService
+        services.AddSingleton<MyService>();
+
+        // Tạo IServiceProvider
+        var providers = services.BuildServiceProvider();
+
+        // Khởi tạo 1 MyService
+        var myservice = providers.GetService<MyService>();
+
+        myservice?.PrintData();
+    + Console:
+        ```
+        Hello / 2
+- Khi phương thức `MyService` được khởi tạo (`services.AddSingleton<MyService>();`) thì ở `constructor` của nó có 1 `IOptions` có kiểu `MyServiceOptions` nên nó sẽ tìm trong chương trình xem chỗ nào đăng ký `MyServiceOptions` (đăng ký qua `Configure<>`) thì nó sẽ lấy ra và `inject` vào `MyService` cho chúng ta khi `get` dịch vụ (`var myservice = providers.GetService<MyService>();`)

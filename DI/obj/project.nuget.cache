@@ -1,11 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "eb78LfOvn280yoYfMCseJnMg+s2by+rfh0oykANgEusFZ3EEpLw+2owgiEt87ZsMJa41yiUDpg/k3lxkMeAz7w==",
+  "dgSpecHash": "wHjs9CZlwhW730ucju1jZuKW3kZdl9mx01AWXD/nwvy+3qH3WPf4vzyECRQW3zwEVYmFRqQqR4717DZbJvZAsw==",
   "success": true,
   "projectFilePath": "D:\\Tyan\\ASPNET\\Note_CS\\DI\\DI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\PC\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\8.0.0\\microsoft.extensions.dependencyinjection.8.0.0.nupkg.sha512",
-    "C:\\Users\\PC\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.0\\microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512"
+    "C:\\Users\\PC\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.0\\microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512",
+    "C:\\Users\\PC\\.nuget\\packages\\microsoft.extensions.options\\8.0.1\\microsoft.extensions.options.8.0.1.nupkg.sha512",
+    "C:\\Users\\PC\\.nuget\\packages\\microsoft.extensions.primitives\\8.0.0\\microsoft.extensions.primitives.8.0.0.nupkg.sha512"
   ],
   "logs": []
 }

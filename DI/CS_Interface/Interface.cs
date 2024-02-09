@@ -7,8 +7,8 @@ namespace CS_Interface {
         }
 
         public class ClassB : IClassB {
-            IClassC _c;
-            string _msg;
+            readonly IClassC _c;
+            readonly string _msg;
 
             public ClassB(IClassC c, string msg) {
                 _c = c;
