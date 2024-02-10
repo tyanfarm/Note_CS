@@ -1,0 +1,14 @@
+D:\Tyan\ASPNET\Note_CS\HTTP\bin\Debug\net7.0\HTTP.exe
+D:\Tyan\ASPNET\Note_CS\HTTP\bin\Debug\net7.0\HTTP.deps.json
+D:\Tyan\ASPNET\Note_CS\HTTP\bin\Debug\net7.0\HTTP.runtimeconfig.json
+D:\Tyan\ASPNET\Note_CS\HTTP\bin\Debug\net7.0\HTTP.dll
+D:\Tyan\ASPNET\Note_CS\HTTP\bin\Debug\net7.0\HTTP.pdb
+D:\Tyan\ASPNET\Note_CS\HTTP\obj\Debug\net7.0\HTTP.GeneratedMSBuildEditorConfig.editorconfig
+D:\Tyan\ASPNET\Note_CS\HTTP\obj\Debug\net7.0\HTTP.AssemblyInfoInputs.cache
+D:\Tyan\ASPNET\Note_CS\HTTP\obj\Debug\net7.0\HTTP.AssemblyInfo.cs
+D:\Tyan\ASPNET\Note_CS\HTTP\obj\Debug\net7.0\HTTP.csproj.CoreCompileInputs.cache
+D:\Tyan\ASPNET\Note_CS\HTTP\obj\Debug\net7.0\HTTP.dll
+D:\Tyan\ASPNET\Note_CS\HTTP\obj\Debug\net7.0\refint\HTTP.dll
+D:\Tyan\ASPNET\Note_CS\HTTP\obj\Debug\net7.0\HTTP.pdb
+D:\Tyan\ASPNET\Note_CS\HTTP\obj\Debug\net7.0\HTTP.genruntimeconfig.cache
+D:\Tyan\ASPNET\Note_CS\HTTP\obj\Debug\net7.0\ref\HTTP.dll
