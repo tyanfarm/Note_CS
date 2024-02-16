@@ -105,3 +105,52 @@
     Success
     40
     142.250.204.99
+
+# HTTP Client send request to HTTP Server 
+- Lấy html từ web về:
+
+- ```
+    namespace CS_GetWebContent {
+        class GetHttp {
+            public static async Task<string> GetWebContent(string url) {
+                using var httpclient = new HttpClient();
+
+                try {
+                    HttpResponseMessage httpResponseMessage = await httpclient.GetAsync(url);
+
+                    GetWebHeaders(httpResponseMessage.Headers);
+                    
+                    string html = await httpResponseMessage.Content.ReadAsStringAsync();
+                    
+                    return html;
+                }
+                catch (Exception e) {
+                    Console.WriteLine(e.Message);
+
+                    return "ERROR";
+                }
+                
+            }
+        }
+    }
+- ```
+    var url = "https://xuanthulab.net/networking-su-dung-httpclient-trong-c-tao-cac-truy-van-http.html";
+
+    var task = GetHttp.GetWebContent(url);
+    await task;
+
+    var html = task.Result;
+
+    Console.WriteLine(html);
+<br/>
+- In các headers:
+
+- ```
+    public static void GetWebHeaders(HttpResponseHeaders headers) {
+            foreach(var header in headers) {
+                Console.WriteLine($"{header.Key} - {header.Value}");
+            }
+        }
+
+
+

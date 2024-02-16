@@ -1,10 +1,11 @@
 ﻿using System.Net.NetworkInformation;
+using CS_Request;
 
-var ping = new Ping();
-var pingReply = ping.Send("google.com.vn");
-Console.WriteLine(pingReply.Status);
-if (pingReply.Status == IPStatus.Success)
-{
-    Console.WriteLine(pingReply.RoundtripTime);
-    Console.WriteLine(pingReply.Address);
-}
+var url = "https://xuanthulab.net/networking-su-dung-httpclient-trong-c-tao-cac-truy-van-http.html";
+
+var task = HttpRequest.GetWebContent(url);
+await task;
+
+var html = task.Result;
+
+// Console.WriteLine(html);
