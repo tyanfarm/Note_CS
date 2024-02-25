@@ -1,4 +1,5 @@
-﻿using System.Data.Common;
+﻿using System.Data;
+using System.Data.Common;
 using MySql.Data.MySqlClient;
 
 var sqlStringBuilder = new MySqlConnectionStringBuilder
@@ -25,15 +26,23 @@ connection.Open();
 // QUERY
 using var command = new MySqlCommand();
 command.Connection = connection;
-command.CommandText = "SELECT DanhmucID, TenDanhMuc, MoTa FROM Danhmuc WHERE DanhmucID >= @value;";
+command.CommandText = "DELETE FROM Shippers WHERE Hoten = 'shibal'";
 
-var danhMucID = command.Parameters.AddWithValue("@value", 6);
+var result = command.ExecuteNonQuery();
+Console.WriteLine(result);
+// string[] hotenArr = {"Tyan", "Tlyishere", "Scul"};
+// string[] sdtArr = {"0387970037", "0966579440", "0956123456"};
+
+// var hoten = command.Parameters.AddWithValue("@hoten", "aaa");
+// var sdt = command.Parameters.AddWithValue("@sdt", "0000");
 
 
-var dataReader = command.ExecuteReader();
+// for (int i = 0; i < 3; i++) {
+//     hoten.Value = hotenArr[i];
+//     sdt.Value = sdtArr[i];
+//     var result = command.ExecuteNonQuery();
+//     Console.WriteLine(result);
+// }
 
-while(dataReader.Read()) {
-    Console.WriteLine($"{dataReader["TenDanhMuc"], -15} {dataReader["MoTa"], -10}");
-}
 
 connection.Close();

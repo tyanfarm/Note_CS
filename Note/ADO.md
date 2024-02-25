@@ -135,4 +135,56 @@ ADO.NET
 - Có thể `Add` trực tiếp bằng `AddWithValue` 
     + ```
         var danhMucID = command.Parameters.AddWithValue("@value", 6);
+<br/>
+
+# command.ExecuteReader()
+- Dùng khi kết quả trả về có nhiều dòng
+
+- ```
+    using var dataReader = command.ExecuteReader();
+<br/>
+
+# command.ExecuteScalar()
+- Trả về 1 giá trị (dòng 1, cột 1)
+
+- Thường dùng với các câu truy vấn `COUNT`
+
+- ```
+    command.CommandText = "SELECT count(1) FROM Sanpham WHERE DanhmucID = @value";
+
+    var danhMucID = command.Parameters.AddWithValue("@value", 5);
+
+    var dataScalar = command.ExecuteScalar();
+
+    Console.WriteLine(dataScalar);
+
+- Console output: `7`
+<br/>
+
+# command.ExecuteNonQuery()
+- Dùng cho `INSERT`, `UPDATE`, `DELETE`
+
+- `INSERT`:
+    + ```
+        command.CommandText = "INSERT into Shippers (Hoten, Sodienthoai) values (@hoten, @sdt)";
+
+        string[] hotenArr = {"Tyan", "Tlyishere", "Scul"};
+        string[] sdtArr = {"0387970037", "0966579440", "0956123456"};
+
+        var hoten = command.Parameters.AddWithValue("@hoten", "");
+        var sdt = command.Parameters.AddWithValue("@sdt", "");
+
+        for (int i = 0; i < 3; i++) {
+            hoten.Value = hotenArr[i];
+            sdt.Value = sdtArr[i];
+            var result = command.ExecuteNonQuery();
+            Console.WriteLine(result);
+        }
+- `UPDATE`:
+    + ```
+        command.CommandText = "UPDATE Shippers set Hoten = 'shibal' WHERE Sodienthoai = '0905493075' ";
+- `DELETE`:
+    + ```
+        command.CommandText = "DELETE FROM Shippers WHERE Hoten = 'shibal'";
+
 
