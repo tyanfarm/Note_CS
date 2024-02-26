@@ -4,6 +4,8 @@ Basic Syntax
 
 <br/>
 
+`chcp 65001`: lệnh terminal để xuất được Tiếng Việt có dấu
+
 # Static (thuộc tính tĩnh)
 - ```
     public class MyClass

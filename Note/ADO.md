@@ -48,6 +48,8 @@ ADO.NET
         # localhost 127.0.0.1 - port 3307 - root abc123 
 <br/>
 
+- `docker-compose up -d` để push file lên docker
+
 # Test Connection với MySQL Workbench
 - ![alt](https://i.pinimg.com/736x/35/6a/08/356a0862876e1ebff5b23fc0820973a6.jpg)
 
@@ -187,4 +189,8 @@ ADO.NET
     + ```
         command.CommandText = "DELETE FROM Shippers WHERE Hoten = 'shibal'";
 
+# DataSet & DataAdapter
+- `DataSet` là 1 Table lưu dữ liệu để xử lý
+
+- `DataAdapter` là nơi lấy dữ liệu từ CSDL và chuyển qua `DataSet`
 

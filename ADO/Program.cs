@@ -2,6 +2,24 @@
 using System.Data.Common;
 using MySql.Data.MySqlClient;
 
+static void ShowDataTable(DataTable table) {
+    Console.WriteLine($"Table Name: {table.TableName}");
+
+    foreach (DataColumn col in table.Columns) {
+        Console.Write($"{col.ColumnName, -20}");
+    }
+    Console.WriteLine();
+
+    int number_cols = table.Columns.Count;
+
+    foreach (DataRow r in table.Rows) {
+        for (int i = 0; i < number_cols; i++) {
+            Console.Write($"{r[i], -20}");
+        }
+        Console.WriteLine();
+    }
+}
+
 var sqlStringBuilder = new MySqlConnectionStringBuilder
 {
     ["Server"] = "localhost",
@@ -23,26 +41,17 @@ using var connection = new MySqlConnection(sqlStringConnection);
 
 connection.Open();
 
-// QUERY
-using var command = new MySqlCommand();
-command.Connection = connection;
-command.CommandText = "DELETE FROM Shippers WHERE Hoten = 'shibal'";
+var adapter = new MySqlDataAdapter();
+adapter.TableMappings.Add("Table", "NhanVien");
 
-var result = command.ExecuteNonQuery();
-Console.WriteLine(result);
-// string[] hotenArr = {"Tyan", "Tlyishere", "Scul"};
-// string[] sdtArr = {"0387970037", "0966579440", "0956123456"};
+// SelectCommand
+adapter.SelectCommand = new MySqlCommand("SELECT NhanviennID, Ten, Ho, NgaySinh FROM Nhanvien", connection);
 
-// var hoten = command.Parameters.AddWithValue("@hoten", "aaa");
-// var sdt = command.Parameters.AddWithValue("@sdt", "0000");
+var dataSet = new DataSet();
+adapter.Fill(dataSet);
 
-
-// for (int i = 0; i < 3; i++) {
-//     hoten.Value = hotenArr[i];
-//     sdt.Value = sdtArr[i];
-//     var result = command.ExecuteNonQuery();
-//     Console.WriteLine(result);
-// }
+DataTable ?table = dataSet.Tables["NhanVien"];
+ShowDataTable(table);
 
 
 connection.Close();
