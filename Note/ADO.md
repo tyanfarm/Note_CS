@@ -194,3 +194,111 @@ ADO.NET
 
 - `DataAdapter` là nơi lấy dữ liệu từ CSDL và chuyển qua `DataSet`
 
+<h2 style="color:#FF9999;">SelectCommand</h2>
+
+- `ShowDataTable`:
+    + ```
+        static void ShowDataTable(DataTable table) {
+            Console.WriteLine($"Table Name: {table.TableName}");
+
+            foreach (DataColumn col in table.Columns) {
+                Console.Write($"{col.ColumnName, -20}");
+            }
+            Console.WriteLine();
+
+            int number_cols = table.Columns.Count;
+
+            foreach (DataRow r in table.Rows) {
+                for (int i = 0; i < number_cols; i++) {
+                    Console.Write($"{r[i], -20}");
+                }
+                Console.WriteLine();
+            }
+        }
+    + Sau khi `connection`:
+    + ```
+        var adapter = new MySqlDataAdapter();
+        adapter.TableMappings.Add("Table", "NhanVien");
+
+        // SelectCommand
+        adapter.SelectCommand = new MySqlCommand("SELECT NhanviennID, Ten, Ho, NgaySinh FROM Nhanvien", connection);
+
+        var dataSet = new DataSet();
+
+        // Đổ dữ liệu từ Data nguồn đã lấy vào DataSet
+        adapter.Fill(dataSet);
+
+        DataTable ?table = dataSet.Tables["NhanVien"];
+        ShowDataTable(table);
+    + Cú pháp phương thức `adapter.TableMappings.Add()`: 
+
+        + `adapter.TableMappings.Add(sourceTableName, dataSetTableName);`
+        
+        + Ở đây đoạn code là `adapter.TableMappings.Add("Table", "NhanVien")` có nghĩa là tất cả các dữ liệu từ CSDL sẽ được ánh xạ với bảng có tên `NhanVien` trong tập `DataSet`.
+
+        + Khi không có tên bảng cụ thể trong dữ liệu nguồn thì tên tạm thời `Table` có thể được sử dụng
+
+<h2 style="color:#FF9999;">InsertCommand</h2>
+
+- ```
+    adapter.InsertCommand = new MySqlCommand("INSERT INTO Nhanvien (Ho, Ten) values (@Ho, @Ten)", connection);
+    adapter.InsertCommand.Parameters.Add("@Ho", MySqlDbType.VarChar, 255, "Ho");
+    adapter.InsertCommand.Parameters.Add("@Ten", MySqlDbType.VarChar, 255, "Ten");
+
+    var dataSet = new DataSet();
+
+    // Đổ dữ liệu từ Data nguồn đã lấy vào DataSet
+    adapter.Fill(dataSet);
+
+    DataTable ?table = dataSet.Tables["NhanVien"];
+    ShowDataTable(table);
+
+    var row = table.Rows.Add();
+    row["Ten"] = "Tyan";
+    row["Ho"] = "Pham Qiang"; 
+
+    adapter.Update(dataSet);
+- `@Ho` và `@Ten` trong `adapter.InsertCommand.Parameters.Add()` được gán với tên cột trong bảng dữ liệu tương ứng là `Ho` và `Ten`
+
+<h2 style="color:#FF9999;">DeleteCommand</h2>
+
+- Cú pháp tương tự với `INSERTCOMMAND`
+
+- ```
+    adapter.DeleteCommand = new MySqlCommand("DELETE FROM Nhanvien WHERE NhanviennID = @id", connection);
+    adapter.DeleteCommand.Parameters.Add(new MySqlParameter("@id", MySqlDbType.Int32, 255, "NhanviennID"));
+
+    var dataSet = new DataSet();
+
+    // Đổ dữ liệu từ Data nguồn đã lấy vào DataSet
+    adapter.Fill(dataSet);
+
+    DataTable ?table = dataSet.Tables["NhanVien"];
+
+    // Số dòng bắt đầu từ 0
+    var row10 = table.Rows[10];
+    row10.Delete();
+
+    adapter.Update(dataSet);
+<br/>
+
+<h2 style="color:#FF9999;">UpdateCommand</h2>
+
+- ```
+    adapter.UpdateCommand = new MySqlCommand("UPDATE Nhanvien Set Ho = @Ho, Ten = @Ten WHERE NhanviennID = @id", connection);
+    adapter.UpdateCommand.Parameters.Add(new MySqlParameter("@id", MySqlDbType.Int32, 4, "NhanviennID"));
+    adapter.UpdateCommand.Parameters.Add("@Ho", MySqlDbType.VarChar, 255, "Ten");
+    adapter.UpdateCommand.Parameters.Add("@Ten", MySqlDbType.VarChar, 255, "Ho");
+
+    var dataSet = new DataSet();
+
+    // Đổ dữ liệu từ Data nguồn đã lấy vào DataSet
+    adapter.Fill(dataSet);
+
+    DataTable ?table = dataSet.Tables["NhanVien"];
+
+    var element = table.Rows[9];
+    element["Ten"] = "Ly";
+    element["Ho"] = "Nguyễn Thị Thảo";
+
+    adapter.Update(dataSet);

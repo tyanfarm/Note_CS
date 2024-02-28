@@ -47,11 +47,35 @@ adapter.TableMappings.Add("Table", "NhanVien");
 // SelectCommand
 adapter.SelectCommand = new MySqlCommand("SELECT NhanviennID, Ten, Ho, NgaySinh FROM Nhanvien", connection);
 
+// InsertCommand
+adapter.InsertCommand = new MySqlCommand("INSERT INTO Nhanvien (Ho, Ten) values (@Ho, @Ten)", connection);
+adapter.InsertCommand.Parameters.Add("@Ho", MySqlDbType.VarChar, 255, "Ten");
+adapter.InsertCommand.Parameters.Add("@Ten", MySqlDbType.VarChar, 255, "Ho");
+
+// DeleteCommand
+adapter.DeleteCommand = new MySqlCommand("DELETE FROM Nhanvien WHERE NhanviennID = @id", connection);
+adapter.DeleteCommand.Parameters.Add(new MySqlParameter("@id", MySqlDbType.Int32, 4, "NhanviennID"));
+
+// UpdateCommand
+adapter.UpdateCommand = new MySqlCommand("UPDATE Nhanvien Set Ho = @Ho, Ten = @Ten WHERE NhanviennID = @id", connection);
+adapter.UpdateCommand.Parameters.Add(new MySqlParameter("@id", MySqlDbType.Int32, 4, "NhanviennID"));
+adapter.UpdateCommand.Parameters.Add("@Ho", MySqlDbType.VarChar, 255, "Ten");
+adapter.UpdateCommand.Parameters.Add("@Ten", MySqlDbType.VarChar, 255, "Ho");
+
+
 var dataSet = new DataSet();
+
+// Đổ dữ liệu từ Data nguồn đã lấy vào DataSet
 adapter.Fill(dataSet);
 
 DataTable ?table = dataSet.Tables["NhanVien"];
-ShowDataTable(table);
 
+var element = table.Rows[9];
+element["Ten"] = "Ly";
+element["Ho"] = "Nguyễn Thị Thảo";
+
+adapter.Update(dataSet);
+
+ShowDataTable(table);
 
 connection.Close();
