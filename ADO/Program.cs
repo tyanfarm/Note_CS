@@ -22,7 +22,7 @@ static void ShowDataTable(DataTable table) {
 
 var sqlStringBuilder = new MySqlConnectionStringBuilder
 {
-    ["Server"] = "localhost",
+    ["Server"] = "127.0.0.1",
     ["Database"] = "tyanlab",
 
     // UserID
@@ -69,12 +69,6 @@ var dataSet = new DataSet();
 adapter.Fill(dataSet);
 
 DataTable ?table = dataSet.Tables["NhanVien"];
-
-var element = table.Rows[9];
-element["Ten"] = "Ly";
-element["Ho"] = "Nguyễn Thị Thảo";
-
-adapter.Update(dataSet);
 
 ShowDataTable(table);
 
