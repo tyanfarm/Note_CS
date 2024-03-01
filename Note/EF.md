@@ -34,40 +34,28 @@ Entity Framework
 
 - `DataAdapter` của `ADO.NET` sử dụng trong mô hình `disconnected data access`, còn `EF` là 1 `ORM` giúp làm việc qua các đối tượng trong .NET
 
-# OnConfiguring() trong DbContext
-- Sử dụng để cấu hình các tùy chọn cho DbContext
+# ProductDbContext
+- Code:
+    + ```
+        public class ProductDbContext : DbContext {
+            // DbSet tương ứng với 1 TABLE trong CSDL
+            public DbSet<Product> products {get; set;}
 
-# CreateDatabase
+            private const string connectionString = "server=127.0.0.1;database=tyanlab1;user id=root;password=abc123;port=3307";
 
-- ```
-    static void CreateDatabase() {
-        using var dbcontext = new ProductDbContext();
-        string dbname = dbcontext.Database.GetDbConnection().Database;
-
-        // Create Database
-        var result = dbcontext.Database.EnsureCreated();
-
-        if (result) {
-            Console.WriteLine($"Create db {dbname} successfully!");
+            protected override void  OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+            {
+                base.OnConfiguring(optionsBuilder);
+                optionsBuilder.UseMySQL(connectionString);
+            }
         }
-        else {
-            Console.WriteLine("ERROR!");
-        }
-    }
-# DropDatabase
+- `OnConfiguring()` trong DbContext
+    + Sử dụng để cấu hình các tùy chọn cho DbContext
 
-- ```
-    static void DropDatabase() {
-        using var dbcontext = new ProductDbContext();
-        string dbname = dbcontext.Database.GetDbConnection().Database;
+- Khi định nghĩa `DbSet<Product> products`, EF thao tác CRUD trên bảng Products trong CSQL qua `ProductDbContext`
 
-        // Delete database
-        var result = dbcontext.Database.EnsureDeleted();
+- Ở class `Product` ta cài đặt thuộc tính `[Table("TableName")]` để class Product sẽ được ánh xạ vào TABLE MyProduct thay vì tên mặc định.
+    + ```
 
-        if (result) {
-            Console.WriteLine($"Delete db {dbname} successfully!");
-        }
-        else {
-            Console.WriteLine("ERROR!");
-        }
-    }
+
+
