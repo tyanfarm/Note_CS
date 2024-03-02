@@ -13,5 +13,7 @@ namespace EF {
         
         [StringLength(50)]
         public string? Provider {get; set;}
+
+        public void PrintInfo() => Console.WriteLine($"{ProductId} - {ProductName} - {Provider}");
     }
 }

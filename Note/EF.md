@@ -55,7 +55,20 @@ Entity Framework
 - Khi định nghĩa `DbSet<Product> products`, EF thao tác CRUD trên bảng Products trong CSQL qua `ProductDbContext`
 
 - Ở class `Product` ta cài đặt thuộc tính `[Table("TableName")]` để class Product sẽ được ánh xạ vào TABLE MyProduct thay vì tên mặc định.
-    + ```
+
+# LINQ & return Object
+- ```
+    Product result = (from product in dbcontext.products
+                  where product.ProductId == id
+                  select product);
+- Lỗi xảy ra vì bạn đang cố gắng gán một biểu thức LINQ (một `IQueryable<Product>`) vào một biến `Product`.
+
+- Để sửa lỗi này, bạn có thể sử dụng phương thức `FirstOrDefault()` hoặc `SingleOrDefault()` để trả về một đối tượng `Product`.
+
+- ```
+    Product result = (from product in dbcontext.products
+                  where product.ProductId == id
+                  select product).FirstOrDefault();
 
 
 
