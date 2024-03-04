@@ -69,6 +69,219 @@ Entity Framework
     Product result = (from product in dbcontext.products
                   where product.ProductId == id
                   select product).FirstOrDefault();
+<br/>
 
+# CRUD with database
+- ```
+    static void CreateDatabase() {
+        using var dbcontext = new ProductDbContext();
+        string dbname = dbcontext.Database.GetDbConnection().Database;
 
+        // Create Database
+        var result = dbcontext.Database.EnsureCreated();
 
+        if (result) {
+            Console.WriteLine($"Create db {dbname} successfully!");
+        }
+        else {
+            Console.WriteLine("ERROR!");
+        }
+    }
+- ```
+    static void DropDatabase() {
+        using var dbcontext = new ProductDbContext();
+        string dbname = dbcontext.Database.GetDbConnection().Database;
+
+        // Delete database
+        var result = dbcontext.Database.EnsureDeleted();
+
+        if (result) {
+            Console.WriteLine($"Delete db {dbname} successfully!");
+        }
+        else {
+            Console.WriteLine("ERROR!");
+        }
+    }
+- ```
+    static void InsertDatabase() {
+        using var dbcontext = new ProductDbContext();
+
+        var products = new Product[] {
+            new Product() {ProductId = 1, ProductName = "Product 1", Provider = "Company A"},
+            new Product() {ProductId = 6, ProductName = "Product 2", Provider = "Company B"},
+            new Product() {ProductId = 7, ProductName = "Product 3", Provider = "Company C"},
+            new Product() {ProductId = 8, ProductName = "Product 4", Provider = "Company D"},
+            new Product() {ProductId = 9, ProductName = "Product 5", Provider = "Company E"},
+        };
+
+        // AddRange để thêm nhiều đối tượng
+        dbcontext.AddRange(products);
+
+        int num_rows = dbcontext.SaveChanges();
+
+        Console.WriteLine($"Insert {num_rows} rows !");
+    }
+- ```
+    static void ReadDatabase() {
+        using var dbcontext = new ProductDbContext();
+
+        // LINQ
+        
+        // var products = dbcontext.products.ToList();
+        // products.ForEach(product => product.PrintInfo());
+
+        // products là 1 DbSet
+        var result = from product in dbcontext.products
+                    where product.ProductId >= 4
+                    select product;
+
+        result.ToList().ForEach(product => product.PrintInfo());
+    }
+- ```
+    static void RenameProduct(int id, string newName) {
+        using var dbcontext = new ProductDbContext();
+
+        Product result = (from product in dbcontext.products
+                    where product.ProductId == id
+                    select product).FirstOrDefault();
+
+        if (result != null) {
+            result.ProductName = newName;
+            
+            int num_row = dbcontext.SaveChanges();
+            Console.WriteLine($"{num_row} rows has been changed !");
+        }
+    }
+- ```
+    static void DeleteProduct(int id) {
+        using var dbcontext = new ProductDbContext();
+
+        Product result = (from product in dbcontext.products
+                    where product.ProductId == id
+                    select product).FirstOrDefault();
+
+        if (result != null) {
+            dbcontext.Remove(result);
+            
+            int num_row = dbcontext.SaveChanges();
+            Console.WriteLine($"Delete {num_row} rows !");
+        }
+    }
+
+# Logging
+- Install Package:
+    + ```
+        dotnet add package Microsoft.Extensions.DependencyInjection
+        dotnet add package Microsoft.Extensions.Logging
+        dotnet add package Microsoft.Extensions.Logging.Console
+- Để sử dụng `Logging` thì ta cần khai báo dịch vụ trong `DbContext`
+    + ```
+        public static readonly ILoggerFactory loggerFactory = LoggerFactory.Create(builder => {
+            builder.AddFilter(DbLoggerCategory.Query.Name, LogLevel.Information);
+            builder.AddConsole();
+        });
+- Trong `Onfiguring()`:
+    + ```
+        optionsBuilder.UseLoggerFactory(loggerFactory);
+<br/>
+
+# FOREIGN KEY (Khóa ngoại)
+- `Primary Key (PK)` tương ứng với thuộc tính `[Key]`
+- `Foreign Key (FK)`: một `column` ánh xạ tới `PK` của một `TABLE` khác
+
+- Ví dụ ta có 2 `TABLE`: `Category` và `Product`
+    + ```
+        [Table("Category")]
+        public class Category {
+            [Key]
+            public int CategoryId {get; set;}
+
+            [StringLength(50)]
+            [Column("CategoryName", TypeName = "nvarchar(50)")]
+            public string? Name {get; set;}
+
+            [Column(TypeName = "nvarchar(200)")]
+            public string? Description {get; set;}
+        }
+    + ```
+        [Table("Product")]
+        public class Product {
+            [Key]
+            public int ProductId {get; set;}
+
+            [Required]
+            [StringLength(50)]
+            [Column("ProductName", TypeName = "nvarchar(50)")]
+            public string? Name {get; set;}
+            
+            public decimal Price {get; set;}
+
+            public int CateId {get; set;}
+
+            // FOREIGN KEY
+            [ForeignKey("CateId")]
+            public Category? category {get; set;}       // FK -> PK
+
+            public void PrintInfo() => Console.WriteLine($"{ProductId} - {Name} - {Price}");
+        }
+    + `FK` trong bảng `Product` ánh xạ qua `Category` là `CategoryId` của `Category`. 
+    
+    + Nếu ghi `public Category? category {get; set;}` với `[ForeignKey("CateId")]` thì trong bảng `Product` sẽ có thêm 1 cột `CateId`.
+    
+    + `public int CateId {get; set;}`: Cài đặt sẵn 1 cột `CateId` tương ứng với `FK` thì khi khai báo `FK` như ở trên hệ thống sẽ tự hiểu đã có sẵn cột `CateId` và không tạo thêm cột mới.
+
+- Insert dữ liệu tương ứng:
+    + Với `int CateId`: 
+        + ```
+            dbcontext.Add(new Product() {ProductId = 6, Name = "Axus Vivobook", Price = 13900000, CateId = 2});
+    + Với `Category? category`:
+        + ```
+            var c1 = (from c in dbcontext.categories where c.CategoryId == 1 select c).FirstOrDefault();
+        + ```
+            dbcontext.Add(new Product() {ProductId = 2, Name = "Thinkpad Ubuntu", Price = 20000000, category = c2});
+<br/>
+
+# Reference Navigaton - Tham chiếu tới dữ liệu bảng qua FK
+- Trong một mối quan hệ một-nhiều giữa `Category` và `Product`, `Reference Navigation` sẽ là từ `Product` đến `Category`. Mỗi `Product` có một `Reference Navigation` đến `Category`.
+
+- ```
+    using var dbcontext = new ShopContext();
+
+    var product = (from p in dbcontext.products where p.ProductId == 4 select p).FirstOrDefault();
+    
+    if (product.category != null) {
+        Console.WriteLine($"{product.category.Name} - {product.category.Description}");
+    } 
+    else {
+        Console.WriteLine("Category = Null");
+    }
+- Kết quả đoạn code trên sẽ ra `Category = Null` vì lúc này `product.category` chưa được load dữ liệu.
+
+- ```
+    var e = dbcontext.Entry(product);
+    e.Reference(p => p.category).Load();
+- `Entry` dùng để thực hiện các thao tác như cập nhật hoặc tải dữ liệu vào đối tượng.
+
+- `e.Reference(p => p.category).Load()`: 
+    + `Reference` được sử dụng khi có một mối quan hệ một-nhiều hoặc một-một giữa các bảng trong cơ sở dữ liệu.
+
+    + Sau khi xác định mối quan hệ, `Load` được gọi để tải dữ liệu của thực thể `category` từ cơ sở dữ liệu vào bộ nhớ.
+
+# Collection Navigation
+- Đại diện cho mối quan hệ từ một thực thể đến một tập hợp các thực thể khác.
+
+- Mỗi `Category` có một `Collection Navigation` chứa tất cả các `Product` thuộc danh mục đó.
+
+- ```
+    using var dbcontext = new ShopContext();
+
+    var category = (from c in dbcontext.categories where c.CategoryId == 1 select c).FirstOrDefault();
+    Console.WriteLine($"{category.Name} - {category.Description}");
+
+    var e = dbcontext.Entry(category);
+    e.Collection(c => c.products).Load();
+
+    if (category.products != null) {
+        category.products.ForEach(p => p.PrintInfo());
+    }
+    else Console.WriteLine("products == null");

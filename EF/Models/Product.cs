@@ -3,17 +3,25 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EF {
     // class Product sẽ được ánh xạ vào TABLE MyProduct thay vì tên mặc định
-    [Table("MyProduct")]
+    [Table("Product")]
     public class Product {
         [Key]
         public int ProductId {get; set;}
 
+        [Required]
         [StringLength(50)]
-        public string? ProductName {get; set;}
+        [Column("ProductName", TypeName = "nvarchar(50)")]
+        public string? Name {get; set;}
         
-        [StringLength(50)]
-        public string? Provider {get; set;}
+        public decimal Price {get; set;}
 
-        public void PrintInfo() => Console.WriteLine($"{ProductId} - {ProductName} - {Provider}");
+        // Có `?` đồng nghĩa với `CAN BE NULL`
+        public int CateId {get; set;}
+
+        // FOREIGN KEY
+        [ForeignKey("CateId")]
+        public Category? category {get; set;}       // FK -> PK
+
+        public void PrintInfo() => Console.WriteLine($"{ProductId} - {Name} - {Price} - {CateId}");
     }
 }

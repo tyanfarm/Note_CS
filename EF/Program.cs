@@ -3,7 +3,7 @@ using EF;
 using Microsoft.EntityFrameworkCore;
 
 static void CreateDatabase() {
-    using var dbcontext = new ProductDbContext();
+    using var dbcontext = new ShopContext();
     string dbname = dbcontext.Database.GetDbConnection().Database;
 
     // Create Database
@@ -18,7 +18,7 @@ static void CreateDatabase() {
 }
 
 static void DropDatabase() {
-    using var dbcontext = new ProductDbContext();
+    using var dbcontext = new ShopContext();
     string dbname = dbcontext.Database.GetDbConnection().Database;
 
     // Delete database
@@ -32,71 +32,55 @@ static void DropDatabase() {
     }
 }
 
-static void InsertDatabase() {
-    using var dbcontext = new ProductDbContext();
+static void InsertData() {
+    using var dbcontext = new ShopContext();
 
-    var products = new Product[] {
-        new Product() {ProductId = 1, ProductName = "Product 1", Provider = "Company A"},
-        new Product() {ProductId = 6, ProductName = "Product 2", Provider = "Company B"},
-        new Product() {ProductId = 7, ProductName = "Product 3", Provider = "Company C"},
-        new Product() {ProductId = 8, ProductName = "Product 4", Provider = "Company D"},
-        new Product() {ProductId = 9, ProductName = "Product 5", Provider = "Company E"},
-    };
+    Category c1 = new Category() {CategoryId = 1, Name = "Phone", Description = "List of phones"};
+    Category c2 = new Category() {CategoryId = 2, Name = "Laptop", Description = "List of laptops"};
 
-    // AddRange để thêm nhiều đối tượng
-    dbcontext.AddRange(products);
+    dbcontext.categories.Add(c1);
+    dbcontext.categories.Add(c2);
 
-    int num_rows = dbcontext.SaveChanges();
-
-    Console.WriteLine($"Insert {num_rows} rows !");
-}
-
-static void ReadDatabase() {
-    using var dbcontext = new ProductDbContext();
-
-    // LINQ
+    dbcontext.Add(new Product() {ProductId = 1, Name = "IPhone XS", Price = 6000000, category = c1});
+    dbcontext.Add(new Product() {ProductId = 2, Name = "Thinkpad Ubuntu", Price = 20000000, category = c2});
+    dbcontext.Add(new Product() {ProductId = 3, Name = "Macbook Air", Price = 24000000, category = c2});
+    dbcontext.Add(new Product() {ProductId = 4, Name = "IPhone 14", Price = 30000000, category = c1});
+    dbcontext.Add(new Product() {ProductId = 5, Name = "IPhone 13 Pro Max", Price = 24000000, category = c1});
+    dbcontext.Add(new Product() {ProductId = 6, Name = "Axus Vivobook", Price = 13900000, CateId = 2});
     
-    // var products = dbcontext.products.ToList();
-    // products.ForEach(product => product.PrintInfo());
-
-    // products là 1 DbSet
-    var result = from product in dbcontext.products
-                where product.ProductId >= 4
-                select product;
-
-    result.ToList().ForEach(product => product.PrintInfo());
+    dbcontext.SaveChanges();
 }
 
-static void RenameProduct(int id, string newName) {
-    using var dbcontext = new ProductDbContext();
+// DropDatabase();
+// CreateDatabase();
+// InsertData();
 
-    Product result = (from product in dbcontext.products
-                where product.ProductId == id
-                select product).FirstOrDefault();
+using var dbcontext = new ShopContext();
 
-    if (result != null) {
-        result.ProductName = newName;
-        
-        int num_row = dbcontext.SaveChanges();
-        Console.WriteLine($"{num_row} rows has been changed !");
-    }
+// var product = (from p in dbcontext.products where p.ProductId == 4 select p).FirstOrDefault();
+
+// product.PrintInfo();
+
+// // Tracking
+// var e = dbcontext.Entry(product);
+
+// // Load dữ liệu
+// e.Reference(p => p.category).Load();
+
+// if (product.category != null) {
+//     Console.WriteLine($"{product.category.Name} - {product.category.Description}");
+// } 
+// else {
+//     Console.WriteLine("Category = Null");
+// }
+
+var category = (from c in dbcontext.categories where c.CategoryId == 1 select c).FirstOrDefault();
+Console.WriteLine($"{category.Name} - {category.Description}");
+
+var e = dbcontext.Entry(category);
+e.Collection(c => c.products).Load();
+
+if (category.products != null) {
+    category.products.ForEach(p => p.PrintInfo());
 }
-
-static void DeleteProduct(int id) {
-    using var dbcontext = new ProductDbContext();
-
-    Product result = (from product in dbcontext.products
-                where product.ProductId == id
-                select product).FirstOrDefault();
-
-    if (result != null) {
-        dbcontext.Remove(result);
-        
-        int num_row = dbcontext.SaveChanges();
-        Console.WriteLine($"Delete {num_row} rows !");
-    }
-}
-
-// RenameProduct(3, "Laptop Thinkpad");
-// DeleteProduct(1);
-InsertDatabase();
+else Console.WriteLine("products == null");
