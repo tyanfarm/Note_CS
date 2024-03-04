@@ -272,6 +272,8 @@ Entity Framework
 
 - Mỗi `Category` có một `Collection Navigation` chứa tất cả các `Product` thuộc danh mục đó.
 
+- Hệ thống sẽ tìm trên danh sách các phần tử của `Product.CateId` sau đó chia nhóm để đưa vào `Category.products`
+
 - ```
     using var dbcontext = new ShopContext();
 
