@@ -1,0 +1,14 @@
+D:\Tyan\ASPNET\Note_CS\Migration\bin\Debug\net7.0\Migration.exe
+D:\Tyan\ASPNET\Note_CS\Migration\bin\Debug\net7.0\Migration.deps.json
+D:\Tyan\ASPNET\Note_CS\Migration\bin\Debug\net7.0\Migration.runtimeconfig.json
+D:\Tyan\ASPNET\Note_CS\Migration\bin\Debug\net7.0\Migration.dll
+D:\Tyan\ASPNET\Note_CS\Migration\bin\Debug\net7.0\Migration.pdb
+D:\Tyan\ASPNET\Note_CS\Migration\obj\Debug\net7.0\Migration.GeneratedMSBuildEditorConfig.editorconfig
+D:\Tyan\ASPNET\Note_CS\Migration\obj\Debug\net7.0\Migration.AssemblyInfoInputs.cache
+D:\Tyan\ASPNET\Note_CS\Migration\obj\Debug\net7.0\Migration.AssemblyInfo.cs
+D:\Tyan\ASPNET\Note_CS\Migration\obj\Debug\net7.0\Migration.csproj.CoreCompileInputs.cache
+D:\Tyan\ASPNET\Note_CS\Migration\obj\Debug\net7.0\Migration.dll
+D:\Tyan\ASPNET\Note_CS\Migration\obj\Debug\net7.0\refint\Migration.dll
+D:\Tyan\ASPNET\Note_CS\Migration\obj\Debug\net7.0\Migration.pdb
+D:\Tyan\ASPNET\Note_CS\Migration\obj\Debug\net7.0\Migration.genruntimeconfig.cache
+D:\Tyan\ASPNET\Note_CS\Migration\obj\Debug\net7.0\ref\Migration.dll
