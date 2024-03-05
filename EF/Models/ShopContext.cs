@@ -21,6 +21,7 @@ namespace EF {
             base.OnConfiguring(optionsBuilder);
             optionsBuilder.UseLoggerFactory(loggerFactory);
             optionsBuilder.UseMySQL(connectionString);
+            optionsBuilder.UseLazyLoadingProxies();
         }
     }
 }

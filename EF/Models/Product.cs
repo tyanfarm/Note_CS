@@ -15,12 +15,22 @@ namespace EF {
         
         public decimal Price {get; set;}
 
+
         // Có `?` đồng nghĩa với `CAN BE NULL`
         public int CateId {get; set;}
 
         // FOREIGN KEY
         [ForeignKey("CateId")]
-        public Category? category {get; set;}       // FK -> PK
+        [InverseProperty("products")]
+        public virtual Category category {get; set;}       // FK -> PK
+
+
+        public int? CateId2 {get; set;}
+
+        // FOREIGN KEY
+        [ForeignKey("CateId2")]
+        public virtual Category category2 {get; set;}       // FK -> PK
+        
 
         public void PrintInfo() => Console.WriteLine($"{ProductId} - {Name} - {Price} - {CateId}");
     }

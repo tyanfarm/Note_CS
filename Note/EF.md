@@ -272,7 +272,7 @@ Entity Framework
 
 - Mỗi `Category` có một `Collection Navigation` chứa tất cả các `Product` thuộc danh mục đó.
 
-- Hệ thống sẽ tìm trên danh sách các phần tử của `Product.CateId` sau đó chia nhóm để đưa vào `Category.products`
+- Hệ thống sẽ tìm trên danh sách các phần tử của `Product.CateId` (`FK`) sau đó chia nhóm để đưa vào `Category.products`
 
 - ```
     using var dbcontext = new ShopContext();
@@ -287,3 +287,35 @@ Entity Framework
         category.products.ForEach(p => p.PrintInfo());
     }
     else Console.WriteLine("products == null");
+<br/>
+
+# Inverse Property
+- Khi `Product` có 2 `CateId` thì ta cần xác định xem `CateId` nào liên kết với `List<Product>` của `Category`.
+- Cài đặt như sau:
+    + ```
+        public int CateId {get; set;}
+
+        // FOREIGN KEY
+        [ForeignKey("CateId")]
+        [InverseProperty("products")]
+        public Category? category {get; set;} 
+<br/>
+
+# Automatic Reference
+- Add Package:
+    + `dotnet add package Microsoft.EntityFrameworkCore.Proxies --version 6.0.0`
+
+- Thêm `optionsBuilder.UseLazyLoadingProxies();` vào `Onfiguring()`
+
+- Set `virtual` cho các đối tượng tham chiếu    
+    + `public virtual List<Product> products {get; set;}`
+    + `public virtual Category category {get; set;}`
+
+- Nhờ `LazyLoad` này mà ta không cần phải `Entry` các đối tượng. Khi nào sử dụng tới đối tượng thì nó sẽ lấy dữ liệu về hợp lý.
+
+# Các loại DELETE
+- `ON DELETE CASCADE`: khi bạn xóa một hàng từ bảng B, tất cả các hàng trong bảng A mà có khóa ngoại tham chiếu đến khóa chính của hàng được xóa trong bảng B cũng sẽ bị xóa.
+
+- `ON DELETE RESTRICT`: khi bạn cố gắng xóa một hàng từ bảng B mà có các hàng liên quan trong bảng A, một lỗi hoặc ngoại lệ sẽ được ném, và việc xóa sẽ không được thực hiện.
+
+- `ON DELETE SET NULL`: tất cả các cột của bảng A mà có khóa ngoại tham chiếu đến khóa chính của hàng được xóa trong bảng B sẽ được đặt giá trị NULL.

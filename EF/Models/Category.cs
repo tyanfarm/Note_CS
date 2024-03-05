@@ -14,6 +14,6 @@ namespace EF {
         [Column(TypeName = "nvarchar(200)")]
         public string? Description {get; set;}
 
-        public List<Product> products {get; set;}
+        public virtual List<Product> products {get; set;}
     }
 }

@@ -55,6 +55,15 @@ static void InsertData() {
 // CreateDatabase();
 // InsertData();
 
+// using var dbcontext = new ShopContext();
+
+// var category = (from c in dbcontext.categories where c.CategoryId == 1 select c).FirstOrDefault();
+
+// dbcontext.Remove(category);
+// dbcontext.SaveChanges();
+
+
+
 using var dbcontext = new ShopContext();
 
 // var product = (from p in dbcontext.products where p.ProductId == 4 select p).FirstOrDefault();
@@ -77,8 +86,8 @@ using var dbcontext = new ShopContext();
 var category = (from c in dbcontext.categories where c.CategoryId == 1 select c).FirstOrDefault();
 Console.WriteLine($"{category.Name} - {category.Description}");
 
-var e = dbcontext.Entry(category);
-e.Collection(c => c.products).Load();
+// var e = dbcontext.Entry(category);
+// e.Collection(c => c.products).Load();
 
 if (category.products != null) {
     category.products.ForEach(p => p.PrintInfo());
