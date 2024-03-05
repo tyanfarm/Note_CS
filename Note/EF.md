@@ -2,6 +2,13 @@
 Entity Framework
 </div>
 
+# Các loại quan hệ
+- `1-1`: Một học sinh chỉ có một thẻ học sinh, và mỗi thẻ học sinh chỉ được gán cho một học sinh duy nhất.
+
+- `1-n`: Một giáo viên có thể dạy nhiều sinh viên, nhưng mỗi sinh viên chỉ có một giáo viên hướng dẫn.
+
+- `n-n`: Một sinh viên có thể đăng ký nhiều khóa học, và mỗi khóa học có thể có nhiều sinh viên đăng ký.
+
 # Install Package
 - ```
     dotnet add package System.Data.SqlClient
@@ -299,6 +306,10 @@ Entity Framework
         [ForeignKey("CateId")]
         [InverseProperty("products")]
         public Category? category {get; set;} 
+- Bằng cách sử dụng attribute `InverseProperty()` này, bạn đang thông báo cho `EF Core` rằng mối quan hệ giữa hai thực thể này là một mối quan hệ `One-to-Many`.
+    + 1 `Product` có 1 `Category` -> `1`
+    + 1 `Category` có nhiều `Product` -> `n`
+    + => `1-n`
 <br/>
 
 # Automatic Reference
@@ -347,3 +358,54 @@ Entity Framework
 
         result.ToList().ForEach(r => Console.WriteLine(r));
 <br/>
+
+# Fluent API
+- ```
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            // FLUENT API
+
+            // Thao tác với bảng Product
+            modelBuilder.Entity<Product>(entity => {
+                // Table Mapping
+                entity.ToTable("Product");          // [Table("Product")]
+
+                // PK
+                entity.HasKey(p => p.ProductId);    // [Key]
+
+                // Index
+                // Index giúp tăng hiệu suất truy vấn dữ liệu trên `Price`
+                entity.HasIndex(p => p.Price).HasDatabaseName("index-products-price");
+
+                // Relative One-To-Many (FK for Reference)
+                // CateId
+                entity.HasOne(p => p.category)          // public virtual Category category {get; set;} 
+                        .WithMany(c => c.products)     // [InverseProperty("products")] - Collection Navigation
+                        .HasForeignKey("CateId")        // [ForeignKey("CateId")]
+                        .OnDelete(DeleteBehavior.NoAction)      
+                        .HasConstraintName("FK_Product_Category");      // Set name FK
+
+                // CateId2
+                entity.HasOne(p => p.category2)
+                        .WithMany()
+                        .HasForeignKey("CateId2")
+                        .OnDelete(DeleteBehavior.Cascade); 
+            });
+            
+            // Relative One-To-One
+            modelBuilder.Entity<Category>(entity => {
+                entity.HasOne(c => c.categoryDetail)
+                        .WithOne(d => d.category)
+                        .HasForeignKey<CategoryDetail>(d => d.CategoryDetailID)
+                        .OnDelete(DeleteBehavior.Cascade);
+            });
+        }
+- `One-To-Many`:
+    + `.HasForeignKey("CateId")` hợp lệ vì `FK` từ `Product` qua `Category` tạo ra 1 cột mới và câu lệnh này giúp tạo ra 1 cột mới.
+
+- `One-To-One`:
+    + `.HasForeignKey<CategoryDetail>(d => d.CategoryDetailID)`: cần phải nêu rõ cột nào là `FK` vì đây là 2 `PK` của 2 bảng tham chiếu vào nhau.
+
+    + ![alt](https://i.pinimg.com/736x/f9/1a/26/f91a265f35d39c1e737c3b44930809c0.jpg)

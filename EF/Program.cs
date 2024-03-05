@@ -51,21 +51,21 @@ static void InsertData() {
     dbcontext.SaveChanges();
 }
 
-// DropDatabase();
-// CreateDatabase();
+DropDatabase();
+CreateDatabase();
 // InsertData();
 
-using var dbcontext = new ShopContext();
+// using var dbcontext = new ShopContext();
 
-var result = from p in dbcontext.products
-            join c in dbcontext.categories on p.CateId equals c.CategoryId
-            select new {
-                name = p.Name,
-                category = c.Name,
-                price = p.Price
-            };
+// var result = from p in dbcontext.products
+//             join c in dbcontext.categories on p.CateId equals c.CategoryId
+//             select new {
+//                 name = p.Name,
+//                 category = c.Name,
+//                 price = p.Price
+//             };
 
-result.ToList().ForEach(r => Console.WriteLine(r));
+// result.ToList().ForEach(r => Console.WriteLine(r));
 
 
 // var category = (from c in dbcontext.categories where c.CategoryId == 1 select c).FirstOrDefault();

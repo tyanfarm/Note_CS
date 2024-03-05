@@ -15,5 +15,7 @@ namespace EF {
         public string? Description {get; set;}
 
         public virtual List<Product> products {get; set;}
+
+        public virtual CategoryDetail categoryDetail {get; set;}
     }
 }
