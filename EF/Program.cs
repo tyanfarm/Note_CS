@@ -55,7 +55,18 @@ static void InsertData() {
 // CreateDatabase();
 // InsertData();
 
-// using var dbcontext = new ShopContext();
+using var dbcontext = new ShopContext();
+
+var result = from p in dbcontext.products
+            join c in dbcontext.categories on p.CateId equals c.CategoryId
+            select new {
+                name = p.Name,
+                category = c.Name,
+                price = p.Price
+            };
+
+result.ToList().ForEach(r => Console.WriteLine(r));
+
 
 // var category = (from c in dbcontext.categories where c.CategoryId == 1 select c).FirstOrDefault();
 
@@ -64,7 +75,7 @@ static void InsertData() {
 
 
 
-using var dbcontext = new ShopContext();
+// using var dbcontext = new ShopContext();
 
 // var product = (from p in dbcontext.products where p.ProductId == 4 select p).FirstOrDefault();
 
@@ -83,13 +94,13 @@ using var dbcontext = new ShopContext();
 //     Console.WriteLine("Category = Null");
 // }
 
-var category = (from c in dbcontext.categories where c.CategoryId == 1 select c).FirstOrDefault();
-Console.WriteLine($"{category.Name} - {category.Description}");
+// var category = (from c in dbcontext.categories where c.CategoryId == 1 select c).FirstOrDefault();
+// Console.WriteLine($"{category.Name} - {category.Description}");
 
 // var e = dbcontext.Entry(category);
 // e.Collection(c => c.products).Load();
 
-if (category.products != null) {
-    category.products.ForEach(p => p.PrintInfo());
-}
-else Console.WriteLine("products == null");
+// if (category.products != null) {
+//     category.products.ForEach(p => p.PrintInfo());
+// }
+// else Console.WriteLine("products == null");

@@ -319,3 +319,31 @@ Entity Framework
 - `ON DELETE RESTRICT`: khi bạn cố gắng xóa một hàng từ bảng B mà có các hàng liên quan trong bảng A, một lỗi hoặc ngoại lệ sẽ được ném, và việc xóa sẽ không được thực hiện.
 
 - `ON DELETE SET NULL`: tất cả các cột của bảng A mà có khóa ngoại tham chiếu đến khóa chính của hàng được xóa trong bảng B sẽ được đặt giá trị NULL.
+
+# LINQ
+- Kiểm tra `Name` của `Product` chứa ký tự 
+    + ```
+        using var dbcontext = new ShopContext();
+
+        var products = from p in dbcontext.products
+                        where p.Name.ToLower().Contains("a")        // ToLower - chuyển hết qua chữ thường
+                        orderby p.Price descending
+                        select p;
+
+        products.ToList().ForEach(p => p.PrintInfo());
+    + Hệ thống thực hiện truy vấn khi ta sử dụng lệnh `ToList()`, còn trước đó thì mới khởi tạo đối tượng.
+
+- Join 2 bảng và in ra dữ liệu
+    + ```
+        using var dbcontext = new ShopContext();
+
+        var result = from p in dbcontext.products
+                    join c in dbcontext.categories on p.CateId equals c.CategoryId
+                    select new {
+                        name = p.Name,
+                        category = c.Name,
+                        price = p.Price
+                    };
+
+        result.ToList().ForEach(r => Console.WriteLine(r));
+<br/>
