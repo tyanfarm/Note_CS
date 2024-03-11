@@ -15,7 +15,7 @@ namespace EF {
         public DbSet<Category> categories {get; set;}
         public DbSet<CategoryDetail> categoryDetail {get; set;}
 
-        private const string connectionString = "server=127.0.0.1;database=tyanlab1;user id=root;password=abc123;port=3307";
+        private const string connectionString = "server=127.0.0.1;database=shopdata;user id=root;password=abc123;port=3307";
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

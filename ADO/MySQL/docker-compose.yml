@@ -17,7 +17,7 @@ services:
 
 networks:                            # TẠO NETWORK
   my-network:
-    driver: bridge
+    driver: nat
 
 volumes:                              # TẠO Ổ ĐĨA LƯU DB
   storedb:

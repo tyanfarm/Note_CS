@@ -6,6 +6,10 @@ Basic Syntax
 
 `chcp 65001`: lệnh terminal để xuất được Tiếng Việt có dấu
 
+# Initialize Project
+- `Console Application`: `dotnet new console`
+- `ASP NET Core Empty` : `dotnet new web`
+
 # Static (thuộc tính tĩnh)
 - ```
     public class MyClass

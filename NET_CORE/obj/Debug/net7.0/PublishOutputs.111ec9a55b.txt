@@ -1,0 +1,7 @@
+D:\Tyan\ASPNET\Note_CS\NET_CORE\bin\Debug\net7.0\publish\NET_CORE.exe
+D:\Tyan\ASPNET\Note_CS\NET_CORE\bin\Debug\net7.0\publish\appsettings.Development.json
+D:\Tyan\ASPNET\Note_CS\NET_CORE\bin\Debug\net7.0\publish\appsettings.json
+D:\Tyan\ASPNET\Note_CS\NET_CORE\bin\Debug\net7.0\publish\NET_CORE.dll
+D:\Tyan\ASPNET\Note_CS\NET_CORE\bin\Debug\net7.0\publish\NET_CORE.deps.json
+D:\Tyan\ASPNET\Note_CS\NET_CORE\bin\Debug\net7.0\publish\NET_CORE.runtimeconfig.json
+D:\Tyan\ASPNET\Note_CS\NET_CORE\bin\Debug\net7.0\publish\NET_CORE.pdb

@@ -53,7 +53,7 @@ static void InsertData() {
 
 DropDatabase();
 CreateDatabase();
-// InsertData();
+InsertData();
 
 // using var dbcontext = new ShopContext();
 
