@@ -1,11 +1,19 @@
 {
   "Version": 1,
-  "Hash": "/Bi8eCpHtM6PBPuvasN7exi/Eaj1nHeHZ7Tb9E6o+Cw=",
+  "Hash": "RqsOehekdlwWKzXZ0WGauWNyqWcgJ+IJjmoilhYa01c=",
   "Source": "NET_CORE",
   "BasePath": "_content/NET_CORE",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "NET_CORE\\wwwroot",
+      "Source": "NET_CORE",
+      "ContentRoot": "D:\\Tyan\\ASPNET\\Note_CS\\NET_CORE\\wwwroot\\",
+      "BasePath": "_content/NET_CORE",
+      "Pattern": "**"
+    }
+  ],
   "Assets": []
 }

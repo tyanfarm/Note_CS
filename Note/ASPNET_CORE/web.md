@@ -28,6 +28,8 @@ DOTNET NEW WEB
     + Host.Run()
 
 # Webpack
+- Dùng để đóng gói (bundling) các tệp JavaScript, CSS, và các tài nguyên khác của ứng dụng web. Ánh xạ từ file `scss` qua `css` nhanh chóng.
+
 - Install: 
     + Trước tiên ta cần cài `Node.js` để sử dụng lệnh `npm`
 
@@ -56,4 +58,43 @@ DOTNET NEW WEB
         npm install copy-webpack-plugin 
 
         # package giám sát file  thay đổi
-        npm install npm-watch                       
+        npm install npm-watch        
+    + ```
+        # cài đặt thư viện bootstrap
+        npm install bootstrap                   
+
+        # cài đặt Jquery
+        npm install jquery       
+
+        # thư viện cần cho bootstrap               
+        npm install popper.js
+- Sau các lệnh này các package trên được tải về lưu tại `node_modules`, giờ đến bước cấu hình `Webpack` để khi chạy nó có được mục đích:
+
+    + Copy `jquery.min.js` từ package `jquery` ra thư mục `wwwroot/js`
+
+    + Copy `popper.min.js` từ package `popper.js` ra thư mục `wwwroot/js`
+
+    + Copy `bootstrap.min.js` từ package `bootstrap` ra thư mục `wwwroot/js`
+
+    + Biên dịch file `src/scss/site.scss` thành file `wwww/css/site.min.css` (đã gộp cả CSS của Bootstrap)
+
+- Để cấu hình thì ta làm các bước sau:
+    + Tạo file `webpack.config.js` và copy nội dung ở link sau vào (`https://gist.githubusercontent.com/xuanthulabnet/ce1f473658567c09f277362694c90157/raw/dde4f0e3e6b20ad3bc3b6df2988321c606010176/webpack.config.js`)
+
+    + Thêm nội dung sau vào `package.json` như sau:
+        "main": "index.js",
+        "watch": {
+            "build": "src/scss/site.scss"
+        },
+        "scripts": {
+            "test": "echo \"Error: no test specified\" && exit 1",
+            "build": "webpack",
+            "watch": "npm-watch"
+        },
+    
+    + Chạy lệnh `npm run build`
+
+    + Kết quả:
+    + ![alt](https://i.pinimg.com/736x/26/63/5b/26635b833db9cbd548580e2f21acd683.jpg)
+
+    + File `site.scss` được liên kết với `site.min.css` và khi chạy lệnh `npm watch run` thì khi điều chỉnh ở `site.scss` hệ thống sẽ tự ánh xạ dữ liệu qua `site.min.css`.

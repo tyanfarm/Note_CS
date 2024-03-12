@@ -23,3 +23,6 @@ D:\Tyan\ASPNET\Note_CS\NET_CORE\obj\Debug\net7.0\refint\NET_CORE.dll
 D:\Tyan\ASPNET\Note_CS\NET_CORE\obj\Debug\net7.0\NET_CORE.pdb
 D:\Tyan\ASPNET\Note_CS\NET_CORE\obj\Debug\net7.0\NET_CORE.genruntimeconfig.cache
 D:\Tyan\ASPNET\Note_CS\NET_CORE\obj\Debug\net7.0\ref\NET_CORE.dll
+D:\Tyan\ASPNET\Note_CS\NET_CORE\bin\Debug\net7.0\package-lock.json
+D:\Tyan\ASPNET\Note_CS\NET_CORE\bin\Debug\net7.0\package.json
+D:\Tyan\ASPNET\Note_CS\NET_CORE\bin\Debug\net7.0\NET_CORE.staticwebassets.runtime.json
