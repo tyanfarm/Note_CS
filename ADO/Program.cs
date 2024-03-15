@@ -23,14 +23,14 @@ static void ShowDataTable(DataTable table) {
 var sqlStringBuilder = new MySqlConnectionStringBuilder
 {
     ["Server"] = "127.0.0.1",
-    ["Database"] = "tyanlab",
+    ["Database"] = "testdb",
 
     // UserID
     ["UID"] = "root",
-    ["PWD"] = "abc123",
+    ["PWD"] = "tyan",
 
     // Port ảo của MySQL trong Docker
-    ["Port"] = "3307"
+    ["Port"] = "3306"
 };
 
 var sqlStringConnection = sqlStringBuilder.ToString();
