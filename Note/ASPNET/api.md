@@ -20,3 +20,12 @@ WEB API
 
 # Routing
 - Khi cài đặt attribute `Route` ở các `Controller` thì để Routing được trên web ta cần thêm `app.MapControllers()` ở `Program.cs`
+
+- `ApiController`: 
+    + Tự động trả về các `HTTP Status Code` của các action có attribute `HttpGet`, `HttpPost`, ...
+
+    + Tự động kiểm tra `ModelState` và trả về `Bad Request - 400` nếu không hợp lệ.
+        + `ModelState` thường được sử dụng để kiểm tra tính hợp lệ của dữ liệu
+
+- `HttpGet`: khi truy cập đến `controller` thì `action` có thuộc tính này sẽ tự động được chạy
+
